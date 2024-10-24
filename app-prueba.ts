@@ -184,6 +184,18 @@ function listClientsIdsSortByTaxNumber() {
 }
 
 // 2 Arreglo con los nombres de clientes ordenados de mayor a menor por la suma TOTAL de los saldos de cada cliente en los bancos que participa.
+
+function sortClientsTotalBalances() {
+        const totalBalances = clients.map(client => {
+        const totalBalance = accounts
+            .filter(account => account.clientId === client.id)
+            .reduce((acc, account) => acc + account.balance, 0);
+        return { name: client.name, totalBalance };
+    });
+    return totalBalances
+        .sort((a, b) => b.totalBalance - a.totalBalance)
+        .map(client => client.name); 
+}  
 // 3 Objeto en que las claves sean los nombres de los bancos y los valores un arreglo con los ruts de sus clientes ordenados alfabeticamente por nombre.
 // 4 Arreglo ordenado decrecientemente con los saldos de clientes que tengan más de 25.000 en el Banco SANTANDER
 // 5 Arreglo con ids de bancos ordenados crecientemente por la cantidad TOTAL de dinero que administran.
