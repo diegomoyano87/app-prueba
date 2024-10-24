@@ -169,7 +169,14 @@ SECCIÓN PROBLEMAS
 */
 
 // 0 Arreglo con los ids de los clientes
+
+function listClientsIds() {
+    return clients.map(client => client.id);
+}
+
 // 1 Arreglo con los ids de los clientes ordenados por rut
+
+
 // 2 Arreglo con los nombres de clientes ordenados de mayor a menor por la suma TOTAL de los saldos de cada cliente en los bancos que participa.
 // 3 Objeto en que las claves sean los nombres de los bancos y los valores un arreglo con los ruts de sus clientes ordenados alfabeticamente por nombre.
 // 4 Arreglo ordenado decrecientemente con los saldos de clientes que tengan más de 25.000 en el Banco SANTANDER
