@@ -293,8 +293,34 @@ function banksPoorClients() {
     return poorClientsByBank;
 }
 // 8 Agregar nuevo cliente con datos ficticios a "clientes" y agregar una cuenta en el BANCO ESTADO con un saldo de 9000 para este nuevo empleado. 
-
 // Luego devolver el lugar que ocupa este cliente en el ranking de la pregunta 
+
+function newClientRanking() {
+    const newClient = { id: 7, taxNumber: '12345678K', name: 'DIEGO MOYANO' };
+    clients.push(newClient);
+
+    accounts.push({ clientId: newClient.id, bankId: 3, balance: 9000 });
+
+    const bankEstadoClients = accounts
+        .filter(account => account.bankId === 3)
+        .reduce((acc, account) => {
+            const client = acc.find(c => c.clientId === account.clientId);
+            if (client) {
+                client.balance += account.balance;
+            } else {
+                acc.push({ clientId: account.clientId, balance: account.balance });
+            }
+            return acc;
+        }, []);
+
+    const ranking = bankEstadoClients.sort((a, b) => b.balance - a.balance);
+
+    const clientRank = ranking.findIndex(c => c.clientId === newClient.id) + 1;
+
+    return clientRank;
+}
+
+
 
 2.
 
@@ -315,5 +341,5 @@ console.log('Pregunta 6');
 console.log(banksFidelity());
 console.log('Pregunta 7');
 console.log(banksPoorClients());
-/*console.log('Pregunta 8');
-console.log(newClientRanking());*/
+console.log('Pregunta 8');
+console.log(newClientRanking());
