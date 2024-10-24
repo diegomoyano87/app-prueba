@@ -250,6 +250,26 @@ function banksRankingByTotalBalance() {
 
 // 6 Objeto en que las claves sean los nombres de los bancos y los valores el número de clientes que solo tengan cuentas en ese banco.
 
+function banksFidelity() {
+
+    const clientBankCount = accounts.reduce((acc, account) => {
+        acc[account.clientId] = acc[account.clientId] || new Set();
+        acc[account.clientId].add(account.bankId);
+        return acc;
+    }, {});
+
+    const loyalClients = Object.entries(clientBankCount)
+        .filter(([clientId, banksSet]) => banksSet.size === 1)
+        .map(([clientId, banksSet]) => ({ clientId: parseInt(clientId), bankId: [...banksSet][0] }));
+
+    const fidelityByBank = banks.reduce((acc, bank) => {
+        acc[bank.name] = loyalClients.filter(client => client.bankId === bank.id).length;
+        return acc;
+    }, {});
+
+    return fidelityByBank;
+}
+
 
 // 7 Objeto en que las claves sean los nombres de los bancos y los valores el id de su cliente con menos dinero.
 
