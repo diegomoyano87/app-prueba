@@ -273,6 +273,25 @@ function banksFidelity() {
 
 // 7 Objeto en que las claves sean los nombres de los bancos y los valores el id de su cliente con menos dinero.
 
+function banksPoorClients() {
+    const accountsByBank = banks.reduce((acc, bank) => {
+        acc[bank.id] = accounts.filter(account => account.bankId === bank.id);
+        return acc;
+    }, {});
+
+    const poorClientsByBank = banks.reduce((acc, bank) => {
+        const bankAccounts = accountsByBank[bank.id];
+        if (bankAccounts.length > 0) {
+            const poorestAccount = bankAccounts.reduce((poorest, current) => {
+                return current.balance < poorest.balance ? current : poorest;
+            });
+            acc[bank.name] = poorestAccount.clientId;
+        }
+        return acc;
+    }, {});
+
+    return poorClientsByBank;
+}
 // 8 Agregar nuevo cliente con datos ficticios a "clientes" y agregar una cuenta en el BANCO ESTADO con un saldo de 9000 para este nuevo empleado. 
 
 // Luego devolver el lugar que ocupa este cliente en el ranking de la pregunta 
@@ -294,7 +313,7 @@ console.log('Pregunta 5');
 console.log(banksRankingByTotalBalance());
 console.log('Pregunta 6');
 console.log(banksFidelity());
-/*console.log('Pregunta 7');
+console.log('Pregunta 7');
 console.log(banksPoorClients());
-console.log('Pregunta 8');
+/*console.log('Pregunta 8');
 console.log(newClientRanking());*/
