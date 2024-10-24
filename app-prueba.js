@@ -237,21 +237,24 @@ function richClientsBalances() {
 // 5 Arreglo con ids de bancos ordenados crecientemente por la cantidad TOTAL de dinero que administran.
 
 function banksRankingByTotalBalance() {
-    // Paso 1: Crear un objeto para acumular el saldo total por banco
     const totalBalanceByBank = accounts.reduce((acc, account) => {
         const { bankId, balance } = account;
-        acc[bankId] = (acc[bankId] || 0) + balance; // Acumular el balance para cada bankId
+        acc[bankId] = (acc[bankId] || 0) + balance;
         return acc;
     }, {});
 
-    // Paso 2: Ordenar los bancos por el balance total en orden ascendente
     return Object.keys(totalBalanceByBank)
-        .sort((a, b) => totalBalanceByBank[a] - totalBalanceByBank[b]) // Comparar balances
-        .map(bankId => parseInt(bankId)); // Devolver solo los IDs de los bancos
+        .sort((a, b) => totalBalanceByBank[a] - totalBalanceByBank[b])
+        .map(bankId => parseInt(bankId));
 }
+
 // 6 Objeto en que las claves sean los nombres de los bancos y los valores el número de clientes que solo tengan cuentas en ese banco.
+
+
 // 7 Objeto en que las claves sean los nombres de los bancos y los valores el id de su cliente con menos dinero.
+
 // 8 Agregar nuevo cliente con datos ficticios a "clientes" y agregar una cuenta en el BANCO ESTADO con un saldo de 9000 para este nuevo empleado. 
+
 // Luego devolver el lugar que ocupa este cliente en el ranking de la pregunta 
 
 2.
@@ -269,9 +272,9 @@ console.log('Pregunta 4');
 console.log(richClientsBalances());
 console.log('Pregunta 5');
 console.log(banksRankingByTotalBalance());
-/*console.log('Pregunta 6');
+console.log('Pregunta 6');
 console.log(banksFidelity());
-console.log('Pregunta 7');
+/*console.log('Pregunta 7');
 console.log(banksPoorClients());
 console.log('Pregunta 8');
 console.log(newClientRanking());*/
