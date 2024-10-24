@@ -197,7 +197,43 @@ function sortClientsTotalBalances() {
         .map(client => client.name); 
 }  
 // 3 Objeto en que las claves sean los nombres de los bancos y los valores un arreglo con los ruts de sus clientes ordenados alfabeticamente por nombre.
+
+function banksClientsTaxNumbers() {
+    const result = {};
+
+    banks.forEach(bank => {
+        result[bank.name] = [];
+    });
+
+    accounts.forEach(account => {
+        const client = clients.find(client => client.id === account.clientId);
+        const bank = banks.find(bank => bank.id === account.bankId);
+
+        if (client && bank) {
+            result[bank.name].push(client);
+        }
+    });
+
+    for (const bankName in result) {
+        result[bankName].sort((a, b) => {
+            return a.name.localeCompare(b.name);
+        });
+        result[bankName] = result[bankName].map(client => client.taxNumber);
+    }
+
+    return result;
+}
+
 // 4 Arreglo ordenado decrecientemente con los saldos de clientes que tengan más de 25.000 en el Banco SANTANDER
+
+function richClientsBalances() {
+    const richBalances = accounts
+        .filter(account => account.balance > 25000 && account.bankId === 1)
+        .map(account => account.balance);
+
+    return richBalances.sort((a, b) => b - a);
+}
+
 // 5 Arreglo con ids de bancos ordenados crecientemente por la cantidad TOTAL de dinero que administran.
 // 6 Objeto en que las claves sean los nombres de los bancos y los valores el número de clientes que solo tengan cuentas en ese banco.
 // 7 Objeto en que las claves sean los nombres de los bancos y los valores el id de su cliente con menos dinero.
