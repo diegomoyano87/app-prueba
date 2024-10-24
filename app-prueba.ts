@@ -176,6 +176,12 @@ function listClientsIds() {
 
 // 1 Arreglo con los ids de los clientes ordenados por rut
 
+function listClientsIdsSortByTaxNumber() {
+    return clients
+        .slice() 
+        .sort((a, b) => a.taxNumber.localeCompare(b.taxNumber)) 
+        .map(client => client.id); 
+}
 
 // 2 Arreglo con los nombres de clientes ordenados de mayor a menor por la suma TOTAL de los saldos de cada cliente en los bancos que participa.
 // 3 Objeto en que las claves sean los nombres de los bancos y los valores un arreglo con los ruts de sus clientes ordenados alfabeticamente por nombre.
